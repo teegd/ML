@@ -318,6 +318,8 @@ button{cursor:pointer;border:none;background:none;}
 .sim-bar{flex:1;border-radius:3px 3px 0 0;background:var(--surf2);transition:height .3s,background .2s;position:relative;min-height:2px;}
 .sim-bar.cur{background:var(--go);}
 .sim-bar.opt{background:var(--warn);}
+.sim-bar.over-comp{background:repeating-linear-gradient(45deg,var(--no-dim),var(--no-dim) 3px,transparent 3px,transparent 6px);opacity:.7;}
+.sim-bar.over-comp.cur{background:var(--no);opacity:1;}
 .sim-curve-foot{display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);}
 .sim-curve-opt{color:var(--warn);font-weight:700;}
 
@@ -330,11 +332,34 @@ button{cursor:pointer;border:none;background:none;}
 .sim-comp-btn:active{transform:scale(.96);}
 .sim-comp-btn.on{background:var(--ml-blue);color:#fff;}
 
+.sim-comp-price{
+  background:var(--surf2);border-radius:12px;padding:12px 14px;margin-bottom:14px;
+}
+.sim-comp-price-lbl{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:9px;}
+.sim-comp-price-row{display:flex;align-items:center;gap:6px;}
+.sim-comp-price-inp{
+  flex:1;background:var(--bg);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;font-size:16px;font-weight:700;color:var(--ink);
+  text-align:right;font-variant-numeric:tabular-nums;
+}
+.sim-comp-price-inp::placeholder{color:var(--ink3);font-weight:400;text-align:right;}
+.sim-comp-price-unit{font-size:11px;color:var(--ink3);flex-shrink:0;}
+.sim-comp-price-note{font-size:11px;color:var(--ink2);line-height:1.4;margin-top:8px;}
+.sim-comp-price-note.warn{color:var(--no);font-weight:600;}
+
 .sim-warn-opt{
   background:var(--no-dim);border:1px solid rgba(224,41,63,.25);
   border-radius:10px;padding:9px 12px;margin-top:8px;
   font-size:11px;font-weight:600;color:var(--no);line-height:1.4;
 }
+
+.sim-preview-sep{height:1px;background:var(--line);margin:16px 0 14px;}
+.sim-preview-lbl{font-size:11px;font-weight:700;color:var(--ink2);margin-bottom:9px;}
+.sim-preview-card{
+  background:var(--surf2);border-radius:12px;overflow:hidden;
+}
+.sim-preview-card .bk-row{padding:10px 13px;font-size:13px;}
+.sim-preview-card .bk-row.total .bk-v{font-size:15px;}
 
 .sim-elast-row{
   display:flex;justify-content:space-between;align-items:center;
@@ -646,6 +671,20 @@ button{cursor:pointer;border:none;background:none;}
 
           <div class="sim-confianza hidden" id="simConfianza"></div>
 
+          <div class="sim-comp-toggle" id="simCompToggle">
+            <button class="sim-comp-btn" id="compNo" onclick="setCompetencia(false)">🔒 Sin competencia</button>
+            <button class="sim-comp-btn" id="compSi" onclick="setCompetencia(true)">⚔️ Con competencia</button>
+          </div>
+
+          <div class="sim-comp-price hidden" id="simCompPriceCard">
+            <div class="sim-comp-price-lbl">Precio actual del competidor en esa publicación</div>
+            <div class="sim-comp-price-row">
+              <input class="sim-comp-price-inp" type="number" id="simCompPrice" placeholder="Ej. 879" inputmode="decimal" oninput="onCompPriceInput()">
+              <span class="sim-comp-price-unit">MXN</span>
+            </div>
+            <div class="sim-comp-price-note" id="simCompPriceNote"></div>
+          </div>
+
           <div class="sim-curve-wrap">
             <div class="sim-curve-lbl">Utilidad total estimada por precio</div>
             <div class="sim-curve" id="simCurve"></div>
@@ -656,21 +695,28 @@ button{cursor:pointer;border:none;background:none;}
             </div>
           </div>
 
-          <div class="sim-comp-toggle" id="simCompToggle">
-            <button class="sim-comp-btn" id="compNo" onclick="setCompetencia(false)">🔒 Sin competencia</button>
-            <button class="sim-comp-btn" id="compSi" onclick="setCompetencia(true)">⚔️ Con competencia</button>
-          </div>
-
           <div class="sim-elast-row">
             <span class="sim-elast-lbl">Sensibilidad del mercado (elasticidad)</span>
             <div class="sim-elast-ctl">
               <button class="sim-elast-btn" onclick="adjElast(-0.25)">−</button>
-              <span class="sim-elast-val" id="elastVal">1.0</span>
+              <span class="sim-elast-val" id="elastVal">2.0</span>
               <button class="sim-elast-btn" onclick="adjElast(0.25)">+</button>
             </div>
           </div>
-          <div class="sim-note" id="simNote">Default 1.0: para cuando eres líder de catálogo sin competencia directa en esa pieza. <b>Bájala</b> hacia 0.5–0.7 si estás lejos del precio de un modelo nuevo equivalente. <b>Súbela</b> hacia 2.0–3.0 si tu precio se acerca al de ese sustituto nuevo — ahí sí te castigan las ventas.</div>
+          <div class="sim-note" id="simNote">Rango calibrado con ventas reales del catálogo: 2.0 sin competencia directa, 3.0 con competencia. <b>Bájala</b> hacia 1.8 si estás muy lejos del precio de un modelo nuevo equivalente. <b>Súbela</b> hacia 3.2 si tu precio se acerca al de ese sustituto — ahí sí te castigan las ventas.</div>
           <div class="sim-warn-opt hidden" id="simWarnOpt"></div>
+
+          <div class="sim-preview-sep"></div>
+          <div class="sim-preview-lbl">Así quedaría tu publicación a este precio</div>
+          <div class="sim-preview-card">
+            <div class="bk-row"><span class="bk-k">Precio de venta</span><span class="bk-v" id="spP">—</span></div>
+            <div class="bk-row"><span class="bk-k">− Comisión</span><span class="bk-v minus" id="spC">—</span></div>
+            <div class="bk-row"><span class="bk-k">− Impuesto</span><span class="bk-v minus" id="spI">—</span></div>
+            <div class="bk-row" id="spEnvRow"><span class="bk-k">− Envío</span><span class="bk-v minus" id="spE">—</span></div>
+            <div class="bk-row mid"><span class="bk-k">= Ingreso neto</span><span class="bk-v" id="spN">—</span></div>
+            <div class="bk-row"><span class="bk-k">− Costo proveedor</span><span class="bk-v minus" id="spCo">—</span></div>
+            <div class="bk-row total"><span class="bk-k">= Utilidad neta</span><span class="bk-v" id="spU">—</span></div>
+          </div>
         </div>
         <div class="sim-placeholder" id="simPlaceholder">
           <span>Completa precio, costo y ventas de 60 días para activar el simulador</span>
@@ -854,21 +900,21 @@ function precioParaMargen(costo, envio, costoFin, tasaCom, margenDeseado) {
 // Modelo de elasticidad-precio constante, típico de marketplaces:
 // ventas_nuevo = ventas_base * (precio_nuevo / precio_base) ^ (-elasticidad)
 // elasticidad=2.0 -> subir precio 10% baja ventas ~20% (aprox, no lineal exacto)
-// Default 1.0 (elasticidad unitaria): para vendedores líderes de catálogo en
-// su publicación, sin distribuidor/competidor directo activo en esa pieza
-// específica (caso TEEGD: sobre-stock Philips descontinuado). El comprador
-// no tiene a quién más comprarle ahí mismo, así que la sensibilidad real al
-// precio es menor que en un commodity genérico -- PERO sigue existiendo un
-// techo de sustitución cruzada: si el precio se acerca al de un modelo nuevo
-// equivalente, la elasticidad efectiva sube fuerte. Bajar manualmente hacia
-// 0.5-0.7 cuando estés lejos de ese techo; subir hacia 2.0-3.0 al acercarte.
-let _elast = 1.0;
+// Rango calibrado con evidencia real de catálogo (capturas de "Publicaciones
+// similares de tu competencia" en ML): rasuradoras Philips Norelco BG1100
+// se venden entre $499 y $951, con +120 ventas/60d cerca de $699. Eso ubica
+// la sensibilidad real del mercado en un rango angosto -- nunca tan baja
+// que justifique vender a $1,080 algo que se mueve a $700, ni tan alta que
+// el modelo se vuelva errático. Default 2.0 sin competencia, 3.0 con
+// competencia activa. Ajuste manual limitado a 1.8-3.2.
+let _elast = 2.0;
 let _simOptimoMult = null, _simOptimoPrecio = null;
+const SIM_ELAST_MIN = 1.8, SIM_ELAST_MAX = 3.2;
 // Zona de confianza del modelo: fuera de este rango de precio (80%-130% del
 // base), la proyección de ventas se vuelve menos confiable -- el modelo de
 // elasticidad constante es una aproximación local, no una ley física.
 const SIM_CONFIANZA_MIN = 0.8, SIM_CONFIANZA_MAX = 1.3;
-const SIM_MIN_MULT = 0.6, SIM_MAX_MULT = 1.6; // rango del slider: 60%-160% del precio base
+const SIM_MIN_MULT = 0.75, SIM_MAX_MULT = 1.35; // rango del simulador: 75%-135% del precio base
 
 function ventasEstimadas(ventasBase, precioBase, precioNuevo) {
   if (!ventasBase || !precioBase || precioBase<=0 || precioNuevo<=0) return 0;
@@ -885,19 +931,31 @@ function fmtElast(v) {
 }
 
 let _competencia = null; // null = sin elegir, false = sin competencia, true = con competencia
+let _precioCompetidor = null; // precio actual del competidor en esa publicación, si se conoce
+const SIM_MARGEN_SEGURIDAD = 0.97; // techo real = precio competidor * este factor (3% por debajo)
 
 function setCompetencia(hayCompetencia) {
   _competencia = hayCompetencia;
-  _elast = hayCompetencia ? 2.5 : 0.7;
+  _elast = hayCompetencia ? 3.0 : 2.0;
   document.getElementById('compNo').classList.toggle('on', !hayCompetencia);
   document.getElementById('compSi').classList.toggle('on', hayCompetencia);
   document.getElementById('elastVal').textContent = fmtElast(_elast);
+  tog('simCompPriceCard', hayCompetencia);
+  if (!hayCompetencia) { _precioCompetidor = null; si('simCompPrice',''); }
+  buildSimCurve();
+  refreshSimDisplay();
+}
+
+function onCompPriceInput() {
+  const v = pf('simCompPrice');
+  _precioCompetidor = v > 0 ? v : null;
   buildSimCurve();
   refreshSimDisplay();
 }
 
 function adjElast(delta) {
-  _elast = Math.max(0.5, Math.min(4, Math.round((_elast+delta)*100)/100));
+  _elast = Math.max(SIM_ELAST_MIN, Math.min(SIM_ELAST_MAX, Math.round((_elast+delta)*100)/100));
+
   document.getElementById('elastVal').textContent = fmtElast(_elast);
   // Ajuste manual desconecta el toggle -- ya no refleja un preset limpio
   document.getElementById('compNo').classList.remove('on');
@@ -922,7 +980,7 @@ function simCalcAt(precioNuevo, base) {
   const utilPza = ingNeto - costoRealPza;
   const margen = precioNuevo>0 ? utilPza/precioNuevo : 0;
   const utilTotalEst = utilPza * ventasEst;
-  return { precioNuevo, ventasEst, utilPza, margen, utilTotalEst };
+  return { precioNuevo, ventasEst, utilPza, margen, utilTotalEst, com, imp, envio, ingNeto, costoRealPza };
 }
 
 function simBase() {
@@ -1012,13 +1070,13 @@ function refreshSimDisplay() {
     confEl.classList.add('hidden');
   }
 
-  // Aviso secundario: si el ÓPTIMO sugerido cae fuera de zona de confianza Y
-  // se calculó con elasticidad baja (poca competencia asumida), advertir que
-  // ese optimismo no contempla un posible sustituto cercano (ej. modelo nuevo).
+  // Aviso secundario: si el ÓPTIMO sugerido cae fuera de zona de confianza,
+  // advertir que ese precio no contempla un posible sustituto cercano
+  // (ej. modelo nuevo) que castigaría las ventas más de lo que el modelo predice.
   const warnOptEl = document.getElementById('simWarnOpt');
-  if (_simOptimoMult != null && _elast < 1.2 &&
+  if (_simOptimoMult != null &&
       (_simOptimoMult < SIM_CONFIANZA_MIN || _simOptimoMult > SIM_CONFIANZA_MAX)) {
-    warnOptEl.textContent = '⚠ El óptimo sugerido (' + $f(_simOptimoPrecio) + ') asume poca competencia. Verifica que no se acerque al precio de un modelo nuevo equivalente.';
+    warnOptEl.textContent = '⚠ El óptimo sugerido (' + $f(_simOptimoPrecio) + ') está lejos de tu precio actual. Verifica que no se acerque al precio de un modelo nuevo equivalente.';
     warnOptEl.classList.remove('hidden');
   } else {
     warnOptEl.classList.add('hidden');
@@ -1030,6 +1088,19 @@ function refreshSimDisplay() {
   });
 
   highlightSimBar(precioNuevo);
+
+  // Preview de publicación: mismo formato que el desglose principal, pero
+  // recalculado con el precio que se está probando en el simulador.
+  s('spP', $f(precioNuevo));
+  s('spC', '-'+$f(R.com));
+  s('spI', '-'+$f(R.imp));
+  s('spE', R.envio>0 ? '-'+$f(R.envio) : '—');
+  tog('spEnvRow', R.envio>0);
+  s('spN', $f(R.ingNeto));
+  s('spCo', '-'+$f(R.costoRealPza));
+  const spU = document.getElementById('spU');
+  spU.textContent = $f(R.utilPza);
+  spU.style.color = R.utilPza>=0 ? 'var(--go)' : 'var(--no)';
 }
 
 function buildSimCurve() {
@@ -1046,15 +1117,26 @@ function buildSimCurve() {
   const maxUtil = Math.max(...pts.map(p=>p.util), 1);
   const minUtil = Math.min(...pts.map(p=>p.util), 0);
   const range = (maxUtil-minUtil)||1;
-  let bestIdx = 0;
-  pts.forEach((p,i)=>{ if (p.util>pts[bestIdx].util) bestIdx=i; });
+
+  // Techo real por competencia: si hay competidor activo con precio conocido,
+  // el modelo de elasticidad NO puede sugerir un óptimo por encima de ese
+  // precio -- en catálogo, pasar al competidor no "reduce un poco las
+  // ventas", las elimina casi por completo porque el comprador ve un solo
+  // precio ganador. El óptimo se busca solo entre los puntos por debajo del
+  // techo; si ninguno califica, se usa el punto más bajo del rango.
+  const techo = (_competencia===true && _precioCompetidor>0) ? _precioCompetidor*SIM_MARGEN_SEGURIDAD : Infinity;
+  let candidatos = pts.map((p,i)=>({...p,i})).filter(p=>p.precio<=techo);
+  if (!candidatos.length) candidatos = [{...pts[0], i:0}];
+  let bestIdx = candidatos[0].i;
+  candidatos.forEach(p=>{ if (p.util>pts[bestIdx].util) bestIdx=p.i; });
   _simOptimoMult = pts[bestIdx].mult;
   _simOptimoPrecio = pts[bestIdx].precio;
 
   const curve = document.getElementById('simCurve');
   curve.innerHTML = pts.map((p,i)=>{
     const h = Math.max(3, ((p.util-minUtil)/range)*100);
-    const cls = i===bestIdx ? 'opt' : '';
+    const sobreTecho = p.precio > techo;
+    const cls = (i===bestIdx ? 'opt' : '') + (sobreTecho ? ' over-comp' : '');
     return `<div class="sim-bar ${cls}" style="height:${h}%" data-precio="${p.precio}" onclick="simSetPrecio(${p.precio})"></div>`;
   }).join('');
   curve.dataset.precios = JSON.stringify(pts.map(p=>p.precio));
@@ -1062,6 +1144,22 @@ function buildSimCurve() {
   s('simCurveMin', $f(pts[0].precio));
   s('simCurveMax', $f(pts[N-1].precio));
   s('simCurveOpt', 'óptimo est.: '+$f(pts[bestIdx].precio));
+
+  // Nota junto al campo de precio del competidor
+  const noteEl = document.getElementById('simCompPriceNote');
+  if (_competencia===true && _precioCompetidor>0) {
+    const techoTxt = $f(techo);
+    if (b.precioBase >= _precioCompetidor) {
+      noteEl.textContent = '⚠ Tu precio actual ya iguala o supera al competidor — en catálogo, esto te puede dejar fuera de la mayoría de las ventas.';
+      noteEl.className = 'sim-comp-price-note warn';
+    } else {
+      noteEl.textContent = 'Techo recomendado: ' + techoTxt + ' (3% por debajo del competidor). La curva no sugerirá precios por encima de esto.';
+      noteEl.className = 'sim-comp-price-note';
+    }
+  } else if (_competencia===true) {
+    noteEl.textContent = 'Sin este dato, la curva no puede saber dónde está el techo real — úsala solo como referencia direccional.';
+    noteEl.className = 'sim-comp-price-note';
+  }
 }
 
 function highlightSimBar(precioNuevo) {
@@ -1253,7 +1351,7 @@ function decidir(dec) {
   const rec = {
     id: Date.now().toString(36)+Math.random().toString(36).slice(2),
     nombre, tipo:gv('fTipo'), precio, com, imp, envio, costo, uds, ventas60:v60, tarjeta,
-    decision: dec, elast:_elast, competencia:_competencia,
+    decision: dec, elast:_elast, competencia:_competencia, precioCompetidor:_precioCompetidor,
     calc: R ? { ingNeto:R.ingNeto, costoFin:R.costoFin, costoReal:R.costoReal, utilPza:R.utilPza,
                 margen:R.margen, utilTotal:R.utilTotal, costoTotal:R.costoTotal, roi:R.roi, dias:R.dias, pmin:R.pmin } : {},
     cfgSnap: cfg, fecha: new Date().toISOString()
@@ -1270,7 +1368,7 @@ const EPK = 'ctaP_elastMem';
 function loadElastMem() { try { return JSON.parse(localStorage.getItem(EPK)) || {}; } catch { return {}; } }
 function guardarElastPorProducto(nombre, elast, competencia) {
   const mem = loadElastMem();
-  mem[nombre.toLowerCase().trim()] = { elast, competencia, fecha: new Date().toISOString() };
+  mem[nombre.toLowerCase().trim()] = { elast, competencia, precioCompetidor: _precioCompetidor, fecha: new Date().toISOString() };
   localStorage.setItem(EPK, JSON.stringify(mem));
 }
 function sugerirElastPorNombre() {
@@ -1281,21 +1379,26 @@ function sugerirElastPorNombre() {
   if (!hit) return;
   _elast = hit.elast;
   _competencia = hit.competencia;
+  _precioCompetidor = hit.precioCompetidor || null;
   if (document.getElementById('elastVal')) {
     document.getElementById('elastVal').textContent = fmtElast(_elast);
     document.getElementById('compNo').classList.toggle('on', hit.competencia===false);
     document.getElementById('compSi').classList.toggle('on', hit.competencia===true);
+    tog('simCompPriceCard', hit.competencia===true);
+    if (_precioCompetidor) si('simCompPrice', _precioCompetidor);
   }
-  toast('📋 Usando elasticidad guardada para "'+nombre+'": '+fmtElast(_elast));
+  const compTxt = _precioCompetidor ? ', competidor en '+$f(_precioCompetidor) : '';
+  toast('📋 Elasticidad guardada: '+fmtElast(_elast)+compTxt);
 }
 
 function clearAll() {
   ['fNombre','fPrecio','fCom','fImp','fCosto','fUds','fV60','fMargenDeseado'].forEach(id=>si(id,''));
   si('fEnv','120'); si('fTipo','C');
   document.getElementById('fTarjeta').checked = false;
-  si('simDirect','');
+  si('simDirect',''); si('simCompPrice','');
   _simPrecioActual = null;
-  _elast = 1.0; _competencia = null;
+  _elast = 2.0; _competencia = null; _precioCompetidor = null;
+  tog('simCompPriceCard', false);
   setMode('forward');
   document.getElementById('scroll').scrollTo({top:0,behavior:'smooth'});
 }
@@ -1311,8 +1414,11 @@ function loadRec(d) {
   document.getElementById('fTarjeta').checked = d.tarjeta;
   si('simDirect','');
   _simPrecioActual = null;
-  _elast = d.elast != null ? d.elast : 1.0;
+  _elast = d.elast != null ? d.elast : 2.0;
   _competencia = d.competencia !== undefined ? d.competencia : null;
+  _precioCompetidor = d.precioCompetidor || null;
+  si('simCompPrice', _precioCompetidor || '');
+  tog('simCompPriceCard', _competencia===true);
   onInput(); nav('an');
 }
 function delRec(id) {
