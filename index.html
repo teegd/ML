@@ -250,4 +250,1278 @@ button{cursor:pointer;border:none;background:none;}
 /* Price min callout */
 .pmin-card{
   background:var(--go-dim);border:1px solid rgba(0,210,106,.3);
-  border-radius:16px;padding:15px 16
+  border-radius:16px;padding:15px 16px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.pmin-lbl{font-size:10px;font-weight:800;color:var(--go);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.pmin-val{font-size:24px;font-weight:800;color:var(--go);letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+.pmin-sub{font-size:11px;color:var(--ink2);margin-top:3px;}
+
+/* ═══════ SIMULADOR DE PRECIO ═══════ */
+.sim-card{
+  background:var(--surf);border:1px solid var(--line);
+  border-radius:16px;padding:16px;
+}
+.sim-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.sim-title{font-size:13px;font-weight:700;color:var(--ink);}
+.sim-est-tag{font-size:9px;font-weight:800;letter-spacing:.08em;color:var(--warn);background:var(--warn-dim);padding:3px 8px;border-radius:6px;}
+
+.sim-price-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;}
+.sim-price-lbl{font-size:12px;color:var(--ink2);}
+.sim-price-val{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+
+/* Step buttons — reemplaza el slider, mucho más confiable al tacto */
+.sim-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px;}
+.sim-step-btn{
+  padding:13px 2px;border-radius:11px;background:var(--surf2);
+  font-size:13px;font-weight:800;color:var(--ink2);text-align:center;
+  transition:transform .08s,background .12s;
+  min-width:0;overflow:hidden;
+}
+.sim-step-btn:active{transform:scale(.93);}
+.sim-step-btn.cur{background:var(--go);color:#001a0d;}
+.sim-step-btn.base{color:var(--ink);}
+
+.sim-direct-card{
+  background:var(--surf2);border-radius:12px;padding:12px 14px;
+  margin-bottom:16px;
+}
+.sim-direct-lbl{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px;}
+.sim-direct-row{display:flex;align-items:center;gap:8px;}
+.sim-direct-inp{
+  flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;font-size:16px;font-weight:700;color:var(--ink);
+  text-align:right;font-variant-numeric:tabular-nums;
+}
+.sim-direct-inp::placeholder{color:var(--ink3);font-weight:400;text-align:right;}
+.sim-direct-go{
+  flex-shrink:0;padding:11px 14px;border-radius:10px;background:var(--ml-blue);
+  color:#fff;font-size:13px;font-weight:800;transition:transform .08s;
+  white-space:nowrap;
+}
+.sim-direct-go:active{transform:scale(.94);}
+
+.sim-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.sim-stat{background:var(--surf2);border-radius:12px;padding:11px 13px;}
+.sim-stat-lbl{font-size:9px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.sim-stat-val{font-size:17px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--ink);}
+
+.sim-confianza{
+  background:var(--warn-dim);border:1px solid rgba(201,122,0,.25);
+  border-radius:10px;padding:9px 12px;margin-bottom:14px;
+  font-size:11px;font-weight:600;color:var(--warn);line-height:1.4;
+}
+
+.sim-curve-wrap{margin-bottom:14px;}
+.sim-curve-lbl{font-size:11px;font-weight:700;color:var(--ink2);margin-bottom:9px;}
+.sim-curve{display:flex;align-items:flex-end;gap:2px;height:64px;margin-bottom:6px;}
+.sim-bar{flex:1;border-radius:3px 3px 0 0;background:var(--surf2);transition:height .3s,background .2s;position:relative;min-height:2px;}
+.sim-bar.cur{background:var(--go);}
+.sim-bar.opt{background:var(--warn);}
+.sim-curve-foot{display:flex;justify-content:space-between;font-size:10px;color:var(--ink3);}
+.sim-curve-opt{color:var(--warn);font-weight:700;}
+
+.sim-comp-toggle{display:flex;gap:6px;margin-bottom:10px;}
+.sim-comp-btn{
+  flex:1;padding:11px 4px;border-radius:11px;background:var(--surf2);
+  font-size:12px;font-weight:700;color:var(--ink2);text-align:center;
+  transition:transform .08s,background .12s,color .12s;
+}
+.sim-comp-btn:active{transform:scale(.96);}
+.sim-comp-btn.on{background:var(--ml-blue);color:#fff;}
+
+.sim-warn-opt{
+  background:var(--no-dim);border:1px solid rgba(224,41,63,.25);
+  border-radius:10px;padding:9px 12px;margin-top:8px;
+  font-size:11px;font-weight:600;color:var(--no);line-height:1.4;
+}
+
+.sim-elast-row{
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--surf2);border-radius:12px;padding:10px 13px;margin-bottom:10px;
+}
+.sim-elast-lbl{font-size:12px;color:var(--ink2);flex:1;padding-right:10px;}
+.sim-elast-ctl{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.sim-elast-btn{
+  width:28px;height:28px;border-radius:8px;background:var(--surf);
+  color:var(--ink);font-size:16px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.sim-elast-btn{transition:transform .08s;}
+.sim-elast-btn:active{transform:scale(.9);background:var(--surf2);}
+.sim-elast-val{font-size:14px;font-weight:800;color:var(--ink);min-width:28px;text-align:center;font-variant-numeric:tabular-nums;}
+
+.sim-note{font-size:11px;color:var(--ink3);line-height:1.5;}
+.sim-note b{color:var(--ink2);}
+
+.sim-placeholder{
+  background:var(--surf);border:1px solid var(--line);border-radius:16px;
+  padding:24px 20px;text-align:center;
+}
+.sim-placeholder span{font-size:12px;color:var(--ink3);line-height:1.5;}
+
+/* Action buttons */
+.act-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.act-btn{
+  padding:15px;border-radius:14px;font-size:14px;font-weight:800;
+  text-align:center;letter-spacing:-.01em;transition:transform .08s;
+}
+.act-btn:active{transform:scale(.96);}
+.act-go{background:var(--go);color:#001a0d;}
+.act-no{background:var(--no-dim);color:var(--no);border:1px solid rgba(255,71,87,.25);}
+.btn-clear{
+  width:100%;padding:13px;border-radius:14px;
+  background:var(--surf);border:1px solid var(--line);
+  color:var(--ink2);font-size:13px;font-weight:700;text-align:center;
+}
+.btn-clear{transition:transform .08s;}
+.btn-clear:active{transform:scale(.97);}
+
+/* Empty state for ring */
+.ring-empty-msg{font-size:12px;color:var(--ink3);text-align:center;line-height:1.5;max-width:200px;}
+
+/* ═══════ HISTORIAL ═══════ */
+.h-wrap{padding:14px 18px 24px;}
+.h-search-row{display:flex;gap:8px;margin-bottom:14px;}
+.h-search{
+  flex:1;background:var(--surf);border:1px solid var(--line);
+  border-radius:12px;padding:11px 14px;font-size:15px;color:var(--ink);
+}
+.h-search::placeholder{color:var(--ink3);}
+.h-filter{
+  background:var(--surf);border:1px solid var(--line);
+  border-radius:12px;padding:11px 12px;font-size:13px;color:var(--ink);
+}
+.h-filter option{background:var(--surf2);}
+
+.h-card{
+  background:var(--surf);border:1px solid var(--line);
+  border-radius:16px;margin-bottom:10px;overflow:hidden;
+}
+.h-bar{height:4px;display:flex;}
+.h-bar-seg{height:100%;transition:width .3s;}
+.h-body{padding:13px 15px;}
+.h-name{font-size:15px;font-weight:700;margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.h-row{display:flex;justify-content:space-between;align-items:flex-end;}
+.h-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;}
+.h-chip{font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;}
+.hc-go{background:var(--go-dim);color:var(--go);}
+.hc-no{background:var(--no-dim);color:var(--no);}
+.hc-warn{background:var(--warn-dim);color:var(--warn);}
+.hc-n{background:var(--surf2);color:var(--ink3);}
+.h-num{font-size:19px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.h-margin{font-size:11px;color:var(--ink3);margin-top:2px;}
+.h-actions{display:flex;border-top:1px solid var(--line);}
+.h-act{flex:1;padding:11px;text-align:center;font-size:12px;font-weight:700;color:var(--ink3);}
+.h-act:active{color:var(--ink);}
+.h-act-del{color:rgba(255,71,87,.45);}
+.h-sep{width:1px;background:var(--line);}
+
+.empty-state{padding:60px 30px;text-align:center;}
+.es-icon{font-size:40px;opacity:.25;margin-bottom:12px;}
+.es-txt{font-size:14px;color:var(--ink3);line-height:1.5;}
+
+.csv-export-btn{
+  display:block;width:100%;margin-top:16px;padding:13px;
+  border-radius:14px;background:var(--surf);border:1px solid var(--line);
+  color:var(--ink3);font-size:12px;font-weight:600;text-align:center;
+}
+.csv-export-btn{transition:transform .08s;}
+.csv-export-btn:active{transform:scale(.97);color:var(--ink2);}
+
+/* ═══════ CONFIG SHEET ═══════ */
+.overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:flex;align-items:flex-end;}
+.overlay.hidden{display:none!important;}
+.sheet{background:var(--surf);border-radius:24px 24px 0 0;width:100%;max-height:88dvh;overflow-y:auto;border-top:1px solid var(--line2);}
+.sheet-handle{width:36px;height:5px;background:var(--surf2);border-radius:3px;margin:12px auto 16px;}
+.sheet-title{font-size:18px;font-weight:800;padding:0 20px 14px;letter-spacing:-.02em;}
+.cfg-sec-lbl{font-size:11px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.09em;padding:16px 20px 8px;}
+.cfg-list{padding:0 20px;display:flex;flex-direction:column;gap:8px;}
+.cfg-row{display:flex;justify-content:space-between;align-items:center;background:var(--surf2);border-radius:12px;padding:13px 15px;}
+.cfg-lbl{font-size:14px;color:var(--ink2);}
+.cfg-inp{width:78px;text-align:right;font-size:16px;font-weight:700;background:none;border:none;color:var(--ink);font-variant-numeric:tabular-nums;}
+.cfg-save{display:block;width:calc(100% - 40px);margin:18px 20px 0;padding:15px;border-radius:14px;background:var(--go);color:#001a0d;font-size:15px;font-weight:800;text-align:center;}
+.cfg-save{transition:transform .08s;}
+.cfg-save:active{transform:scale(.97);}
+.cfg-note{margin:14px 20px 0;padding:12px 14px;background:var(--surf2);border-radius:12px;font-size:12px;color:var(--ink2);line-height:1.5;}
+.cfg-note b{color:var(--go);}
+
+#toast{
+  position:fixed;bottom:calc(var(--safe-b) + 78px);left:50%;
+  transform:translateX(-50%) translateY(14px);
+  background:var(--surf2);border:1px solid var(--line2);color:var(--ink);
+  padding:11px 22px;border-radius:24px;font-size:13px;font-weight:700;
+  white-space:nowrap;opacity:0;transition:all .22s cubic-bezier(.34,1.3,.64,1);
+  z-index:999;pointer-events:none;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.hidden{display:none!important;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hdr">
+    <div class="hdr-row">
+      <div class="hdr-title">TEEGD · <b>¿Conviene?</b></div>
+      <div class="hdr-icon" onclick="openCfg()">⚙</div>
+    </div>
+  </div>
+
+  <div class="scroll" id="scroll">
+
+    <!-- ══════════ ANALIZADOR ══════════ -->
+    <div class="pane on" id="p-an">
+      <div class="an-wrap">
+
+        <!-- RESULT RING -->
+        <div class="ring-card" id="ringCard">
+          <div class="ring-box">
+            <svg class="ring-svg" viewBox="0 0 172 172">
+              <circle cx="86" cy="86" r="73" class="ring-bg"/>
+              <circle cx="86" cy="86" r="73" class="ring-fg" id="ringFg" stroke-dasharray="0 459"/>
+            </svg>
+            <div class="ring-center">
+              <div class="ring-num" id="ringNum">—</div>
+              <div class="ring-lbl">margen</div>
+            </div>
+          </div>
+          <div class="verdict-pill vp-empty" id="verdictPill">Esperando datos</div>
+          <div class="verdict-sub" id="verdictSub">Completa precio y costo para ver si conviene</div>
+        </div>
+
+        <!-- UTILITY -->
+        <div class="util-row">
+          <div class="util-cell">
+            <div class="util-lbl">Utilidad / pieza</div>
+            <div class="util-val" id="uPza">—</div>
+          </div>
+          <div class="util-cell">
+            <div class="util-lbl">Utilidad total</div>
+            <div class="util-val" id="uTotal">—</div>
+            <div class="util-sub" id="uTotalSub"></div>
+          </div>
+        </div>
+
+        <!-- MODO -->
+        <div class="mode-toggle" id="modeToggle">
+          <button class="mode-btn on" id="mbForward" onclick="setMode('forward')">Tengo el precio</button>
+          <button class="mode-btn" id="mbReverse" onclick="setMode('reverse')">Calcular precio</button>
+        </div>
+
+        <!-- PRECIO Y TIPO -->
+        <div class="sec-lbl">El producto</div>
+        <div class="field-card">
+          <div class="field-row">
+            <span class="fr-label">Nombre</span>
+            <input class="fr-input" type="text" id="fNombre" placeholder="Philips Avent Set..." style="text-align:right;font-size:15px;font-weight:600" enterkeyhint="next" data-next="fPrecio" onkeydown="onFieldEnter(event)" onblur="sugerirElastPorNombre()">
+          </div>
+          <div class="field-row" id="rowPrecio">
+            <span class="fr-label">Precio de venta</span>
+            <input class="fr-input" type="number" id="fPrecio" placeholder="0" inputmode="decimal" oninput="onInput()" enterkeyhint="next" data-next="fEnv" onkeydown="onFieldEnter(event)">
+            <span class="fr-unit">MXN</span>
+          </div>
+          <div class="field-row hidden" id="rowMargenDeseado">
+            <span class="fr-label">Margen deseado</span>
+            <input class="fr-input" type="number" id="fMargenDeseado" placeholder="20" inputmode="decimal" oninput="onInput()" enterkeyhint="next" data-next="fEnv" onkeydown="onFieldEnter(event)">
+            <span class="fr-unit">%</span>
+          </div>
+          <div class="field-row">
+            <span class="fr-label">Publicación</span>
+            <select class="fr-select" id="fTipo" onchange="onInput()">
+              <option value="C">Clásica · 15%</option>
+              <option value="P">Premium · 19.5%</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- PRECIO CALCULADO (solo modo inverso) -->
+        <div class="calc-price-card hidden" id="calcPriceCard">
+          <div class="cpc-lbl">Precio de venta necesario</div>
+          <div class="cpc-val" id="cpcVal">—</div>
+          <div class="cpc-sub">Para lograr el margen que pediste, después de comisión, impuesto, envío y costo</div>
+        </div>
+
+        <!-- GASTOS -->
+        <div class="sec-lbl">Gastos de Mercado Libre</div>
+        <div class="field-card">
+          <div class="field-row readonly">
+            <span class="fr-label">Comisión<span class="auto">AUTO</span></span>
+            <input class="fr-input ro" type="number" id="fCom" placeholder="0" readonly>
+          </div>
+          <div class="field-row readonly">
+            <span class="fr-label">Impuesto 10.5%<span class="auto">AUTO</span></span>
+            <input class="fr-input ro" type="number" id="fImp" placeholder="0" readonly>
+          </div>
+          <div class="field-row">
+            <span class="fr-label">Envío neto</span>
+            <input class="fr-input" type="number" id="fEnv" placeholder="120" value="120" inputmode="decimal" oninput="onInput()" enterkeyhint="next" data-next="fCosto" onkeydown="onFieldEnter(event)">
+          </div>
+        </div>
+
+        <!-- COSTO Y LOTE -->
+        <div class="sec-lbl">Tu costo</div>
+        <div class="field-card">
+          <div class="field-row">
+            <span class="fr-label">Costo proveedor c/IVA</span>
+            <input class="fr-input" type="number" id="fCosto" placeholder="0" inputmode="decimal" oninput="onInput()" enterkeyhint="next" data-next="fUds" onkeydown="onFieldEnter(event)">
+          </div>
+          <div class="field-row">
+            <span class="fr-label">Unidades del lote</span>
+            <input class="fr-input" type="number" id="fUds" placeholder="0" inputmode="numeric" oninput="onInput()" enterkeyhint="next" data-next="fV60" onkeydown="onFieldEnter(event)">
+          </div>
+          <div class="tog-row">
+            <span class="tog-label">💳 Pago con tarjeta (MSI)</span>
+            <label class="sw"><input type="checkbox" id="fTarjeta" onchange="onInput()"><div class="sw-t"></div><div class="sw-k"></div></label>
+          </div>
+        </div>
+
+        <!-- ROTACIÓN -->
+        <div class="sec-lbl">Rotación esperada</div>
+        <div class="field-card">
+          <div class="field-row">
+            <span class="fr-label">Ventas del producto, 60 días</span>
+            <input class="fr-input" type="number" id="fV60" placeholder="0" inputmode="numeric" oninput="onInput()" enterkeyhint="done" onkeydown="onFieldEnter(event)">
+          </div>
+        </div>
+        <div class="rot-card" id="rotCard">
+          <div class="rot-hd">
+            <span class="rot-title">Velocidad de salida del lote</span>
+            <span class="rot-tag rt-empty" id="rotTag">—</span>
+          </div>
+          <div class="rot-track"><div class="rot-fill" id="rotFill" style="width:0%"></div></div>
+          <div class="rot-foot">
+            <span id="rotLbl">Agrega ventas y unidades</span>
+            <span class="rot-days" id="rotDays"></span>
+          </div>
+        </div>
+
+        <!-- PRECIO MÍNIMO -->
+        <div class="pmin-card hidden" id="pminCard">
+          <div>
+            <div class="pmin-lbl">Precio mínimo · 20% margen</div>
+            <div class="pmin-val" id="pminVal">—</div>
+            <div class="pmin-sub">Por debajo de esto, no conviene</div>
+          </div>
+        </div>
+
+        <!-- SIMULADOR DE PRECIO — oferta/demanda -->
+        <div class="sec-lbl">Simulador · margen vs. rotación</div>
+        <div class="sim-card hidden" id="simCard">
+          <div class="sim-hd">
+            <span class="sim-title">¿Qué pasa si muevo el precio?</span>
+            <span class="sim-est-tag">ESTIMADO</span>
+          </div>
+          <div class="sim-price-row">
+            <span class="sim-price-lbl">Precio a probar</span>
+            <span class="sim-price-val" id="simPriceVal">—</span>
+          </div>
+          <div class="sim-steps" id="simSteps"></div>
+          <div class="sim-direct-card">
+            <div class="sim-direct-lbl">O escribe un precio exacto</div>
+            <div class="sim-direct-row">
+              <input class="sim-direct-inp" type="number" id="simDirect" placeholder="Ej. 1050" inputmode="decimal" oninput="onSimDirect()">
+              <button class="sim-direct-go" onclick="simReset()">Base</button>
+            </div>
+          </div>
+
+          <div class="sim-stats">
+            <div class="sim-stat">
+              <div class="sim-stat-lbl">Margen</div>
+              <div class="sim-stat-val" id="simMargen">—</div>
+            </div>
+            <div class="sim-stat">
+              <div class="sim-stat-lbl">Ventas est. 60d</div>
+              <div class="sim-stat-val" id="simVentas">—</div>
+            </div>
+            <div class="sim-stat">
+              <div class="sim-stat-lbl">Utilidad total est.</div>
+              <div class="sim-stat-val" id="simUtilTotal">—</div>
+            </div>
+            <div class="sim-stat">
+              <div class="sim-stat-lbl">Rotación est.</div>
+              <div class="sim-stat-val" id="simDias">—</div>
+            </div>
+          </div>
+
+          <div class="sim-confianza hidden" id="simConfianza"></div>
+
+          <div class="sim-curve-wrap">
+            <div class="sim-curve-lbl">Utilidad total estimada por precio</div>
+            <div class="sim-curve" id="simCurve"></div>
+            <div class="sim-curve-foot">
+              <span id="simCurveMin">—</span>
+              <span class="sim-curve-opt" id="simCurveOpt">óptimo: —</span>
+              <span id="simCurveMax">—</span>
+            </div>
+          </div>
+
+          <div class="sim-comp-toggle" id="simCompToggle">
+            <button class="sim-comp-btn" id="compNo" onclick="setCompetencia(false)">🔒 Sin competencia</button>
+            <button class="sim-comp-btn" id="compSi" onclick="setCompetencia(true)">⚔️ Con competencia</button>
+          </div>
+
+          <div class="sim-elast-row">
+            <span class="sim-elast-lbl">Sensibilidad del mercado (elasticidad)</span>
+            <div class="sim-elast-ctl">
+              <button class="sim-elast-btn" onclick="adjElast(-0.25)">−</button>
+              <span class="sim-elast-val" id="elastVal">1.0</span>
+              <button class="sim-elast-btn" onclick="adjElast(0.25)">+</button>
+            </div>
+          </div>
+          <div class="sim-note" id="simNote">Default 1.0: para cuando eres líder de catálogo sin competencia directa en esa pieza. <b>Bájala</b> hacia 0.5–0.7 si estás lejos del precio de un modelo nuevo equivalente. <b>Súbela</b> hacia 2.0–3.0 si tu precio se acerca al de ese sustituto nuevo — ahí sí te castigan las ventas.</div>
+          <div class="sim-warn-opt hidden" id="simWarnOpt"></div>
+        </div>
+        <div class="sim-placeholder" id="simPlaceholder">
+          <span>Completa precio, costo y ventas de 60 días para activar el simulador</span>
+        </div>
+
+        <!-- DESGLOSE -->
+        <div class="sec-lbl">Desglose por pieza</div>
+        <div class="field-card">
+          <div class="bk-row"><span class="bk-k">Precio de venta</span><span class="bk-v" id="bP">—</span></div>
+          <div class="bk-row"><span class="bk-k">− Comisión</span><span class="bk-v minus" id="bC">—</span></div>
+          <div class="bk-row"><span class="bk-k">− Impuesto</span><span class="bk-v minus" id="bI">—</span></div>
+          <div class="bk-row" id="bEnvRow"><span class="bk-k">− Envío</span><span class="bk-v minus" id="bE">—</span></div>
+          <div class="bk-row mid"><span class="bk-k">= Ingreso neto</span><span class="bk-v" id="bN">—</span></div>
+          <div class="bk-row"><span class="bk-k">− Costo proveedor</span><span class="bk-v minus" id="bCo">—</span></div>
+          <div class="bk-row hidden" id="bFRow"><span class="bk-k">− Financiamiento</span><span class="bk-v minus" id="bF">—</span></div>
+          <div class="bk-row total"><span class="bk-k">= Utilidad neta</span><span class="bk-v" id="bU">—</span></div>
+        </div>
+
+        <!-- DISTRIBUCIÓN VISUAL -->
+        <div class="sec-lbl">¿A dónde va cada peso?</div>
+        <div class="dist-card">
+          <div class="dist-track" id="distTrack">
+            <div class="dist-seg" style="width:100%;background:var(--surf2)"></div>
+          </div>
+          <div class="dist-leg" id="distLeg"></div>
+        </div>
+
+        <!-- ACCIONES -->
+        <div class="act-row">
+          <button class="act-btn act-go" onclick="decidir('entro')">✓ Entro</button>
+          <button class="act-btn act-no" onclick="decidir('no')">✕ No entro</button>
+        </div>
+        <button class="btn-clear" onclick="clearAll()">Limpiar todo</button>
+
+      </div>
+    </div><!-- /p-an -->
+
+    <!-- ══════════ HISTORIAL ══════════ -->
+    <div class="pane hidden" id="p-h">
+      <div class="h-wrap">
+        <div class="h-search-row">
+          <input class="h-search" type="text" id="hQ" placeholder="Buscar..." oninput="renderHist()">
+          <select class="h-filter" id="hF" onchange="renderHist()">
+            <option value="all">Todos</option>
+            <option value="entro">✓ Entré</option>
+            <option value="no">✕ No entré</option>
+          </select>
+        </div>
+        <div id="hCards"></div>
+        <button class="csv-export-btn" onclick="doExpCSV()">⬇ Exportar datos (CSV)</button>
+      </div>
+    </div><!-- /p-h -->
+
+  </div><!-- /scroll -->
+
+  <div class="tabbar">
+    <div class="tab on" id="tb-an" onclick="nav('an')">
+      <div class="tab-ic">◎</div>
+      <div class="tab-lb">Analizar</div>
+    </div>
+    <div class="tab" id="tb-h" onclick="nav('h')">
+      <div class="tab-ic">▤</div>
+      <div class="tab-lb">Historial</div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<!-- CONFIG SHEET -->
+<div class="overlay hidden" id="cfgSheet">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Supuestos</div>
+    <div class="cfg-note">Al guardar, <b>todo tu historial se recalcula</b> con los valores nuevos.</div>
+    <div class="cfg-sec-lbl">Comisiones</div>
+    <div class="cfg-list">
+      <div class="cfg-row"><span class="cfg-lbl">Clásica</span><input class="cfg-inp" type="number" id="cCl" value="15" inputmode="decimal">%</div>
+      <div class="cfg-row"><span class="cfg-lbl">Premium</span><input class="cfg-inp" type="number" id="cPr" value="19.5" inputmode="decimal">%</div>
+    </div>
+    <div class="cfg-sec-lbl">Financiamiento</div>
+    <div class="cfg-list">
+      <div class="cfg-row"><span class="cfg-lbl">Tasa tarjeta MSI</span><input class="cfg-inp" type="number" id="cTa" value="7" inputmode="decimal">%</div>
+    </div>
+    <div class="cfg-sec-lbl">Mínimos para "conviene"</div>
+    <div class="cfg-list">
+      <div class="cfg-row"><span class="cfg-lbl">Margen mínimo</span><input class="cfg-inp" type="number" id="cMn" value="20" inputmode="decimal">%</div>
+      <div class="cfg-row"><span class="cfg-lbl">Días para liquidar</span><input class="cfg-inp" type="number" id="cDi" value="60" inputmode="numeric">d</div>
+    </div>
+    <div class="cfg-sec-lbl">Datos</div>
+    <div class="cfg-list">
+      <button class="btn-clear" onclick="doExp()">↓ Exportar historial</button>
+      <button class="btn-clear" onclick="document.getElementById('impF').click()">↑ Importar historial</button>
+      <input type="file" id="impF" accept=".json" class="hidden" onchange="doImp(event)">
+    </div>
+    <button class="cfg-save" onclick="saveCfg()">Guardar</button>
+    <div style="height:calc(var(--safe-b) + 20px)"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// STORE
+// ═══════════════════════════════════════════
+const DK='ctaP_d', CK='ctaP_c';
+const load = () => { try { return JSON.parse(localStorage.getItem(DK)) || []; } catch { return []; } };
+const dump = d => localStorage.setItem(DK, JSON.stringify(d));
+const getCfg = () => {
+  const D = { clasica:15, premium:19.5, tarjeta:7, margenMin:20, dias:60 };
+  try { return { ...D, ...JSON.parse(localStorage.getItem(CK)) }; } catch { return D; }
+};
+
+// ═══════════════════════════════════════════
+// CALC
+// ═══════════════════════════════════════════
+function calc(precio, com, imp, envio, costo, uds, v60, tarjeta, cfg) {
+  if (!precio || !costo) return null;
+  const ingNeto    = precio - com - imp - envio;
+  const costoFin   = tarjeta ? costo * (cfg.tarjeta/100) : 0;
+  const costoReal  = costo + costoFin;
+  const utilPza    = ingNeto - costoReal;
+  const margen     = precio > 0 ? utilPza/precio : 0;
+  const utilTotal  = utilPza * (uds||0);
+  const costoTotal = costoReal * (uds||0);
+  const roi        = costoTotal > 0 ? utilTotal/costoTotal : 0;
+  const dias       = (v60 > 0 && uds > 0) ? Math.ceil(uds * cfg.dias / v60) : null;
+  const comR = precio>0 ? com/precio : 0, impR = precio>0 ? imp/precio : 0;
+  const den  = 1 - comR - impR;
+  const pmin = den > cfg.margenMin/100 ? (costoReal+envio)/(den-cfg.margenMin/100) : null;
+  return { ingNeto, costoFin, costoReal, utilPza, margen, utilTotal, costoTotal, roi, dias, pmin };
+}
+
+function verdict(R, cfg) {
+  if (!R) return { cls:'vp-empty', txt:'Esperando datos', sub:'Completa precio y costo para ver si conviene', ring:'no-data' };
+  const mOk  = R.margen >= cfg.margenMin/100;
+  const dOk  = R.dias === null || R.dias <= cfg.dias;
+  const dKnd = R.dias === null || R.dias <= cfg.dias*2;
+  if (mOk && dOk)   return { cls:'vp-go',   txt:'✓ Conviene invertir',     sub:'Buen margen y rotación saludable', ring:'go' };
+  if (mOk && dKnd)  return { cls:'vp-go',   txt:'✓ Conviene',              sub:'Buen margen — la rotación es algo lenta', ring:'go' };
+  if (mOk && !dKnd) return { cls:'vp-warn', txt:'⚠ Margen bien, rotación mal', sub:'El dinero se queda quieto demasiado tiempo', ring:'warn' };
+  return               { cls:'vp-no',   txt:'✕ No conviene',           sub:'El margen no cubre el riesgo de la inversión', ring:'no' };
+}
+
+// ═══════════════════════════════════════════
+// LIVE RECALC
+// ═══════════════════════════════════════════
+const CIRC = 2 * Math.PI * 73;
+let _mode = 'forward'; // 'forward' = doy precio, 'reverse' = calculo precio
+
+function setMode(m) {
+  _mode = m;
+  document.getElementById('mbForward').classList.toggle('on', m==='forward');
+  document.getElementById('mbReverse').classList.toggle('on', m==='reverse');
+  tog('rowPrecio', m==='forward');
+  tog('rowMargenDeseado', m==='reverse');
+  tog('calcPriceCard', false); // se muestra solo si hay resultado válido
+  const fp = document.getElementById('fPrecio');
+  fp.readOnly = (m==='reverse');
+  fp.style.opacity = (m==='reverse') ? '.5' : '1';
+  document.getElementById('fNombre').dataset.next = (m==='reverse') ? 'fMargenDeseado' : 'fPrecio';
+  if (m==='reverse' && !gv('fMargenDeseado')) si('fMargenDeseado', getCfg().margenMin);
+  onInput();
+}
+
+// Resuelve el precio de venta dado costo + margen deseado.
+// Misma fórmula algebraica que pmin, pero con el margen que el usuario pida.
+function precioParaMargen(costo, envio, costoFin, tasaCom, margenDeseado) {
+  if (!costo || margenDeseado == null) return null;
+  const comR = tasaCom, impR = 0.105;
+  const den = 1 - comR - impR;
+  const target = margenDeseado/100;
+  if (den <= target) return null; // imposible: comisiones+impuesto ya superan el margen pedido
+  const costoReal = costo + (costoFin||0);
+  return (costoReal + envio) / (den - target);
+}
+
+// ═══════════════════════════════════════════
+// SIMULADOR DE PRECIO — oferta/demanda estimada
+// ═══════════════════════════════════════════
+// Modelo de elasticidad-precio constante, típico de marketplaces:
+// ventas_nuevo = ventas_base * (precio_nuevo / precio_base) ^ (-elasticidad)
+// elasticidad=2.0 -> subir precio 10% baja ventas ~20% (aprox, no lineal exacto)
+// Default 1.0 (elasticidad unitaria): para vendedores líderes de catálogo en
+// su publicación, sin distribuidor/competidor directo activo en esa pieza
+// específica (caso TEEGD: sobre-stock Philips descontinuado). El comprador
+// no tiene a quién más comprarle ahí mismo, así que la sensibilidad real al
+// precio es menor que en un commodity genérico -- PERO sigue existiendo un
+// techo de sustitución cruzada: si el precio se acerca al de un modelo nuevo
+// equivalente, la elasticidad efectiva sube fuerte. Bajar manualmente hacia
+// 0.5-0.7 cuando estés lejos de ese techo; subir hacia 2.0-3.0 al acercarte.
+let _elast = 1.0;
+let _simOptimoMult = null, _simOptimoPrecio = null;
+// Zona de confianza del modelo: fuera de este rango de precio (80%-130% del
+// base), la proyección de ventas se vuelve menos confiable -- el modelo de
+// elasticidad constante es una aproximación local, no una ley física.
+const SIM_CONFIANZA_MIN = 0.8, SIM_CONFIANZA_MAX = 1.3;
+const SIM_MIN_MULT = 0.6, SIM_MAX_MULT = 1.6; // rango del slider: 60%-160% del precio base
+
+function ventasEstimadas(ventasBase, precioBase, precioNuevo) {
+  if (!ventasBase || !precioBase || precioBase<=0 || precioNuevo<=0) return 0;
+  const ratio = precioNuevo / precioBase;
+  return ventasBase * Math.pow(ratio, -_elast);
+}
+
+// Formatea elasticidad sin ceros sobrantes pero con al menos 1 decimal: 2.5 -> "2.5", 2.0 -> "2.0"
+function fmtElast(v) {
+  let s = v.toFixed(2);
+  s = s.replace(/0$/, '');
+  if (s.endsWith('.')) s += '0';
+  return s;
+}
+
+let _competencia = null; // null = sin elegir, false = sin competencia, true = con competencia
+
+function setCompetencia(hayCompetencia) {
+  _competencia = hayCompetencia;
+  _elast = hayCompetencia ? 2.5 : 0.7;
+  document.getElementById('compNo').classList.toggle('on', !hayCompetencia);
+  document.getElementById('compSi').classList.toggle('on', hayCompetencia);
+  document.getElementById('elastVal').textContent = fmtElast(_elast);
+  buildSimCurve();
+  refreshSimDisplay();
+}
+
+function adjElast(delta) {
+  _elast = Math.max(0.5, Math.min(4, Math.round((_elast+delta)*100)/100));
+  document.getElementById('elastVal').textContent = fmtElast(_elast);
+  // Ajuste manual desconecta el toggle -- ya no refleja un preset limpio
+  document.getElementById('compNo').classList.remove('on');
+  document.getElementById('compSi').classList.remove('on');
+  buildSimCurve();
+  refreshSimDisplay();
+}
+
+// Calcula utilidad total estimada para un precio dado, usando la misma
+// estructura de gastos que el resto de la app (comisión/impuesto/envío/costo).
+function simCalcAt(precioNuevo, base) {
+  const { precioBase, ventasBase, tasa, envio, costo, costoFin, cfg } = base;
+  const com = precioNuevo * tasa;
+  const imp = precioNuevo * 0.105;
+  const ventasEst = ventasEstimadas(ventasBase, precioBase, precioNuevo);
+  const R = calc(precioNuevo, com, imp, envio, costo, ventasEst, ventasEst, false, cfg);
+  // nota: usamos ventasEst como "uds" para utilidad total estimada, y como v60
+  // para que dias = ceil(ventasEst*60/ventasEst) = 60 (referencia), por eso
+  // calculamos dias real aparte usando uds reales del lote, no aquí.
+  const costoRealPza = costo + (costoFin||0);
+  const ingNeto = precioNuevo - com - imp - envio;
+  const utilPza = ingNeto - costoRealPza;
+  const margen = precioNuevo>0 ? utilPza/precioNuevo : 0;
+  const utilTotalEst = utilPza * ventasEst;
+  return { precioNuevo, ventasEst, utilPza, margen, utilTotalEst };
+}
+
+function simBase() {
+  const cfg = getCfg();
+  const precioBase = pf('fPrecio');
+  const ventasBase = pi('fV60');
+  const costo = pf('fCosto');
+  const tipo = gv('fTipo');
+  const tasa = tipo==='P' ? cfg.premium/100 : cfg.clasica/100;
+  const envio = pf('fEnv') || 120;
+  const tarjeta = document.getElementById('fTarjeta').checked;
+  const costoFin = tarjeta ? costo*(cfg.tarjeta/100) : 0;
+  return { precioBase, ventasBase, costo, tasa, envio, costoFin, cfg };
+}
+
+function simReady() {
+  const b = simBase();
+  return b.precioBase>0 && b.costo>0 && b.ventasBase>0;
+}
+
+let _simPrecioActual = null; // precio que se está probando ahora mismo
+
+// Pasos prácticos: -15%, -7%, base, +7%, +15%
+const SIM_STEPS = [-0.15, -0.07, 0, 0.07, 0.15];
+
+function buildSimSteps() {
+  const b = simBase();
+  const cont = document.getElementById('simSteps');
+  cont.innerHTML = SIM_STEPS.map((pct,i) => {
+    const precio = Math.round(b.precioBase * (1+pct));
+    const lbl = pct===0 ? 'Base' : (pct>0?'+':'')+Math.round(pct*100)+'%';
+    return `<button class="sim-step-btn${pct===0?' base':''}" data-precio="${precio}" onclick="simSetPrecio(${precio})">${lbl}</button>`;
+  }).join('');
+}
+
+function simSetPrecio(precio) {
+  _simPrecioActual = precio;
+  si('simDirect', precio);
+  refreshSimDisplay();
+}
+
+function simReset() {
+  const b = simBase();
+  simSetPrecio(b.precioBase);
+}
+
+function onSimDirect() {
+  const v = pf('simDirect');
+  if (v > 0) { _simPrecioActual = v; refreshSimDisplay(); }
+}
+
+function refreshSimDisplay() {
+  if (!simReady() || !_simPrecioActual) return;
+  const b = simBase();
+  const precioNuevo = _simPrecioActual;
+  const R = simCalcAt(precioNuevo, b);
+  const cfg = b.cfg;
+  const uds = pi('fUds');
+
+  s('simPriceVal', $f(precioNuevo));
+  const mc = R.margen >= cfg.margenMin/100 ? 'u-go' : 'u-no';
+  const mEl = document.getElementById('simMargen');
+  mEl.textContent = (R.margen*100).toFixed(1)+'%';
+  mEl.className = 'sim-stat-val ' + mc;
+
+  s('simVentas', R.ventasEst.toFixed(0) + ' uds');
+
+  const utEl = document.getElementById('simUtilTotal');
+  utEl.textContent = $f(R.utilTotalEst);
+  utEl.className = 'sim-stat-val ' + (R.utilTotalEst>=0?'u-go':'u-no');
+
+  const diasEst = (R.ventasEst>0 && uds>0) ? Math.ceil(uds * cfg.dias / R.ventasEst) : null;
+  const dEl = document.getElementById('simDias');
+  if (diasEst!=null) {
+    dEl.textContent = diasEst + 'd';
+    dEl.className = 'sim-stat-val ' + (diasEst<=cfg.dias?'u-go':diasEst<=cfg.dias*2?'':'u-no');
+  } else { dEl.textContent='—'; dEl.className='sim-stat-val'; }
+
+  // Aviso de confianza: el modelo de elasticidad constante es una aproximación
+  // local. Lejos del precio base, la proyección de ventas pierde confiabilidad.
+  const mult = precioNuevo / b.precioBase;
+  const confEl = document.getElementById('simConfianza');
+  if (mult < SIM_CONFIANZA_MIN || mult > SIM_CONFIANZA_MAX) {
+    confEl.textContent = '⚠ Este precio está lejos del actual — la proyección es menos confiable aquí';
+    confEl.classList.remove('hidden');
+  } else {
+    confEl.classList.add('hidden');
+  }
+
+  // Aviso secundario: si el ÓPTIMO sugerido cae fuera de zona de confianza Y
+  // se calculó con elasticidad baja (poca competencia asumida), advertir que
+  // ese optimismo no contempla un posible sustituto cercano (ej. modelo nuevo).
+  const warnOptEl = document.getElementById('simWarnOpt');
+  if (_simOptimoMult != null && _elast < 1.2 &&
+      (_simOptimoMult < SIM_CONFIANZA_MIN || _simOptimoMult > SIM_CONFIANZA_MAX)) {
+    warnOptEl.textContent = '⚠ El óptimo sugerido (' + $f(_simOptimoPrecio) + ') asume poca competencia. Verifica que no se acerque al precio de un modelo nuevo equivalente.';
+    warnOptEl.classList.remove('hidden');
+  } else {
+    warnOptEl.classList.add('hidden');
+  }
+
+  // Resalta el botón de paso más cercano (si coincide exacto con alguno)
+  document.querySelectorAll('.sim-step-btn').forEach(btn => {
+    btn.classList.toggle('cur', parseInt(btn.dataset.precio)===precioNuevo);
+  });
+
+  highlightSimBar(precioNuevo);
+}
+
+function buildSimCurve() {
+  if (!simReady()) return;
+  const b = simBase();
+  const N = 24;
+  const pts = [];
+  for (let i=0;i<N;i++){
+    const mult = SIM_MIN_MULT + (i/(N-1))*(SIM_MAX_MULT-SIM_MIN_MULT);
+    const precioNuevo = Math.round(b.precioBase*mult);
+    const R = simCalcAt(precioNuevo, b);
+    pts.push({ mult, precio:precioNuevo, util:R.utilTotalEst });
+  }
+  const maxUtil = Math.max(...pts.map(p=>p.util), 1);
+  const minUtil = Math.min(...pts.map(p=>p.util), 0);
+  const range = (maxUtil-minUtil)||1;
+  let bestIdx = 0;
+  pts.forEach((p,i)=>{ if (p.util>pts[bestIdx].util) bestIdx=i; });
+  _simOptimoMult = pts[bestIdx].mult;
+  _simOptimoPrecio = pts[bestIdx].precio;
+
+  const curve = document.getElementById('simCurve');
+  curve.innerHTML = pts.map((p,i)=>{
+    const h = Math.max(3, ((p.util-minUtil)/range)*100);
+    const cls = i===bestIdx ? 'opt' : '';
+    return `<div class="sim-bar ${cls}" style="height:${h}%" data-precio="${p.precio}" onclick="simSetPrecio(${p.precio})"></div>`;
+  }).join('');
+  curve.dataset.precios = JSON.stringify(pts.map(p=>p.precio));
+
+  s('simCurveMin', $f(pts[0].precio));
+  s('simCurveMax', $f(pts[N-1].precio));
+  s('simCurveOpt', 'óptimo est.: '+$f(pts[bestIdx].precio));
+}
+
+function highlightSimBar(precioNuevo) {
+  const curve = document.getElementById('simCurve');
+  if (!curve.dataset.precios) return;
+  const precios = JSON.parse(curve.dataset.precios);
+  let closest = 0, dist = Infinity;
+  precios.forEach((p,i)=>{ const d=Math.abs(p-precioNuevo); if (d<dist){dist=d;closest=i;} });
+  Array.from(curve.children).forEach((bar,i)=>{
+    bar.classList.toggle('cur', i===closest && !bar.classList.contains('opt'));
+  });
+}
+
+function onInput() {
+  const cfg = getCfg();
+  const tipo   = gv('fTipo');
+  const tasa   = tipo==='P' ? cfg.premium/100 : cfg.clasica/100;
+  const envioRaw = pf('fEnv') || 120;
+  const costoRaw = pf('fCosto');
+  const tarjetaRaw = document.getElementById('fTarjeta').checked;
+  const costoFinRaw = tarjetaRaw ? costoRaw*(cfg.tarjeta/100) : 0;
+
+  let precio;
+  if (_mode === 'reverse') {
+    const margenDeseado = pf('fMargenDeseado');
+    const pCalc = precioParaMargen(costoRaw, envioRaw, costoFinRaw, tasa, margenDeseado);
+    if (pCalc && pCalc > 0) {
+      precio = Math.round(pCalc * 100) / 100;
+      si('fPrecio', precio.toFixed(2));
+      s('cpcVal', $f(precio));
+      tog('calcPriceCard', true);
+    } else {
+      precio = 0;
+      si('fPrecio', '');
+      tog('calcPriceCard', false);
+      if (costoRaw > 0 && margenDeseado >= ((1-tasa-0.105)*100)) {
+        s('cpcVal', '—');
+      }
+    }
+  } else {
+    precio = pf('fPrecio');
+    tog('calcPriceCard', false);
+  }
+
+  const com    = precio * tasa;
+  const imp    = precio * 0.105;
+  si('fCom', precio>0 ? com.toFixed(2) : '');
+  si('fImp', precio>0 ? imp.toFixed(2) : '');
+
+  const envio   = envioRaw;
+  const costo   = costoRaw;
+  const uds     = pi('fUds');
+  const v60     = pi('fV60');
+  const tarjeta = tarjetaRaw;
+
+  const R = calc(precio, com, imp, envio, costo, uds, v60, tarjeta, cfg);
+  const V = verdict(R, cfg);
+
+  // Ring + verdict
+  const ringCard = document.getElementById('ringCard');
+  ringCard.className = 'ring-card' + (V.ring!=='no-data' ? ' '+V.ring : '');
+  const pill = document.getElementById('verdictPill');
+  pill.className = 'verdict-pill ' + V.cls;
+  pill.textContent = V.txt;
+  s('verdictSub', V.sub);
+
+  const ringFg = document.getElementById('ringFg');
+  const ringColor = V.ring==='go' ? 'var(--go)' : V.ring==='warn' ? 'var(--warn)' : V.ring==='no' ? 'var(--no)' : 'var(--surf2)';
+  ringFg.style.stroke = ringColor;
+  const pct = R ? Math.max(0, Math.min(1, R.margen)) : 0;
+  ringFg.setAttribute('stroke-dasharray', (pct*CIRC) + ' ' + CIRC);
+  s('ringNum', R ? (R.margen*100).toFixed(1)+'%' : '—');
+
+  // Utility cells
+  if (R) {
+    const upEl = document.getElementById('uPza');
+    upEl.textContent = $f(R.utilPza);
+    upEl.className = 'util-val ' + (R.utilPza>=0?'u-go':'u-no');
+    const utEl = document.getElementById('uTotal');
+    if (uds > 0) {
+      utEl.textContent = $f(R.utilTotal);
+      utEl.className = 'util-val ' + (R.utilTotal>=0?'u-go':'u-no');
+      s('uTotalSub', uds + ' unidades');
+    } else {
+      utEl.textContent = '—'; utEl.className = 'util-val';
+      s('uTotalSub', 'Agrega unidades');
+    }
+  } else {
+    document.getElementById('uPza').textContent = '—';
+    document.getElementById('uPza').className = 'util-val';
+    document.getElementById('uTotal').textContent = '—';
+    document.getElementById('uTotal').className = 'util-val';
+    s('uTotalSub', '');
+  }
+
+  // Rotation gauge
+  const rf = document.getElementById('rotFill'), rt = document.getElementById('rotTag');
+  if (R && R.dias !== null) {
+    const p2 = Math.max(5, Math.min(100, (cfg.dias/R.dias)*100));
+    rf.style.width = p2+'%';
+    if (R.dias <= cfg.dias)        { rf.style.background='var(--go)';   rt.className='rot-tag rt-go';   rt.textContent='Rápida'; }
+    else if (R.dias <= cfg.dias*2) { rf.style.background='var(--warn)'; rt.className='rot-tag rt-warn'; rt.textContent='Lenta'; }
+    else                            { rf.style.background='var(--no)';   rt.className='rot-tag rt-no';   rt.textContent='Muy lenta'; }
+    s('rotLbl', 'Liquidas el lote en');
+    const rd = document.getElementById('rotDays');
+    rd.textContent = R.dias + ' días';
+  } else {
+    rf.style.width = '0%'; rt.className = 'rot-tag rt-empty'; rt.textContent = '—';
+    s('rotLbl', 'Agrega ventas y unidades'); document.getElementById('rotDays').textContent='';
+  }
+
+  // Precio mínimo
+  if (R && R.pmin && R.pmin > 0 && R.pmin < precio*5) {
+    s('pminVal', $f(R.pmin));
+    document.getElementById('pminCard').classList.remove('hidden');
+  } else document.getElementById('pminCard').classList.add('hidden');
+
+  // Breakdown
+  s('bP', $f(precio));
+  s('bC', R ? '-'+$f(com) : '—');
+  s('bI', R ? '-'+$f(imp) : '—');
+  s('bE', envio>0 ? '-'+$f(envio) : '—');
+  tog('bEnvRow', envio>0);
+  s('bN', R ? $f(R.ingNeto) : '—');
+  s('bCo', R ? '-'+$f(R.costoReal) : '—');
+  s('bF', tarjeta && R ? '-'+$f(R.costoFin) : '—');
+  tog('bFRow', tarjeta && R && R.costoFin>0);
+  const bu = document.getElementById('bU');
+  if (R) { bu.textContent = $f(R.utilPza); bu.style.color = R.utilPza>=0 ? 'var(--go)' : 'var(--no)'; }
+  else { bu.textContent='—'; bu.style.color=''; }
+
+  // Distribution bar
+  drawDist(precio, com, imp, envio, costo, R ? R.costoFin : 0, R ? R.utilPza : 0);
+
+  // Simulador de precio
+  if (simReady()) {
+    tog('simCard', true);
+    tog('simPlaceholder', false);
+    buildSimSteps();
+    buildSimCurve();
+    if (_simPrecioActual == null) _simPrecioActual = precio;
+    const ev = document.getElementById('elastVal');
+    ev.textContent = fmtElast(_elast);
+    document.getElementById('compNo').classList.toggle('on', _competencia===false);
+    document.getElementById('compSi').classList.toggle('on', _competencia===true);
+    refreshSimDisplay();
+  } else {
+    tog('simCard', false);
+    tog('simPlaceholder', true);
+    _simPrecioActual = null;
+  }
+}
+
+function drawDist(precio, com, imp, envio, costo, costoFin, utilPza) {
+  const track = document.getElementById('distTrack'), leg = document.getElementById('distLeg');
+  if (!precio || !costo) {
+    track.innerHTML = '<div class="dist-seg" style="width:100%;background:var(--surf2)"></div>';
+    leg.innerHTML = ''; return;
+  }
+  const segs = [
+    { l:'Costo',    v:costo+(costoFin||0), c:'#FFD23F' },
+    { l:'Comisión', v:com,  c:'#FF9F1C' },
+    { l:'Impuesto', v:imp,  c:'#FF4757' },
+    { l:'Envío',    v:envio, c:'#9B5DE5' },
+  ].filter(x=>x.v>0.01);
+  if (utilPza >= 0) segs.push({ l:'Utilidad', v:utilPza, c:'#00D26A' });
+  else              segs.push({ l:'Pérdida',  v:Math.abs(utilPza), c:'#FF4757' });
+  const tot = segs.reduce((a,s)=>a+s.v,0) || 1;
+  track.innerHTML = segs.map(s=>{
+    const pct=(s.v/tot*100).toFixed(2);
+    return `<div class="dist-seg" style="width:${pct}%;background:${s.c}">${pct>13?`<span class="dist-seg-lbl">${s.l}</span>`:''}</div>`;
+  }).join('');
+  leg.innerHTML = segs.map(s=>`<div class="dl-item"><div class="dl-sq" style="background:${s.c}"></div>${s.l} ${$f(s.v)}</div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// DECIDIR / GUARDAR
+// ═══════════════════════════════════════════
+function decidir(dec) {
+  const precio=pf('fPrecio'), costo=pf('fCosto');
+  if (!precio || !costo) { toast('Faltan precio y costo'); return; }
+  const nombre = gv('fNombre').trim();
+  if (!nombre) { toast('Escribe el nombre del producto'); document.getElementById('fNombre').focus(); return; }
+  const cfg = getCfg();
+  const com=pf('fCom'), imp=pf('fImp'), envio=pf('fEnv')||120, uds=pi('fUds'), v60=pi('fV60');
+  const tarjeta = document.getElementById('fTarjeta').checked;
+  const R = calc(precio, com, imp, envio, costo, uds, v60, tarjeta, cfg);
+  const V = verdict(R, cfg);
+  const rec = {
+    id: Date.now().toString(36)+Math.random().toString(36).slice(2),
+    nombre, tipo:gv('fTipo'), precio, com, imp, envio, costo, uds, ventas60:v60, tarjeta,
+    decision: dec, elast:_elast, competencia:_competencia,
+    calc: R ? { ingNeto:R.ingNeto, costoFin:R.costoFin, costoReal:R.costoReal, utilPza:R.utilPza,
+                margen:R.margen, utilTotal:R.utilTotal, costoTotal:R.costoTotal, roi:R.roi, dias:R.dias, pmin:R.pmin } : {},
+    cfgSnap: cfg, fecha: new Date().toISOString()
+  };
+  const data = load(); data.unshift(rec); dump(data); renderHist();
+  if (simReady()) guardarElastPorProducto(nombre, _elast, _competencia);
+  toast(dec==='entro' ? '✓ Registrado: Entré' : '✕ Registrado: No entré');
+}
+
+// ═══════════════════════════════════════════
+// MEMORIA DE ELASTICIDAD POR PRODUCTO
+// ═══════════════════════════════════════════
+const EPK = 'ctaP_elastMem';
+function loadElastMem() { try { return JSON.parse(localStorage.getItem(EPK)) || {}; } catch { return {}; } }
+function guardarElastPorProducto(nombre, elast, competencia) {
+  const mem = loadElastMem();
+  mem[nombre.toLowerCase().trim()] = { elast, competencia, fecha: new Date().toISOString() };
+  localStorage.setItem(EPK, JSON.stringify(mem));
+}
+function sugerirElastPorNombre() {
+  const nombre = gv('fNombre').toLowerCase().trim();
+  if (!nombre) return;
+  const mem = loadElastMem();
+  const hit = mem[nombre];
+  if (!hit) return;
+  _elast = hit.elast;
+  _competencia = hit.competencia;
+  if (document.getElementById('elastVal')) {
+    document.getElementById('elastVal').textContent = fmtElast(_elast);
+    document.getElementById('compNo').classList.toggle('on', hit.competencia===false);
+    document.getElementById('compSi').classList.toggle('on', hit.competencia===true);
+  }
+  toast('📋 Usando elasticidad guardada para "'+nombre+'": '+fmtElast(_elast));
+}
+
+function clearAll() {
+  ['fNombre','fPrecio','fCom','fImp','fCosto','fUds','fV60','fMargenDeseado'].forEach(id=>si(id,''));
+  si('fEnv','120'); si('fTipo','C');
+  document.getElementById('fTarjeta').checked = false;
+  si('simDirect','');
+  _simPrecioActual = null;
+  _elast = 1.0; _competencia = null;
+  setMode('forward');
+  document.getElementById('scroll').scrollTo({top:0,behavior:'smooth'});
+}
+
+function loadRecById(id) {
+  const d = load().find(x=>x.id===id);
+  if (d) loadRec(d);
+}
+function loadRec(d) {
+  setMode('forward');
+  si('fNombre',d.nombre||''); si('fPrecio',d.precio); si('fTipo',d.tipo||'C'); si('fEnv',d.envio||120);
+  si('fCosto',d.costo); si('fUds',d.uds||''); si('fV60',d.ventas60||'');
+  document.getElementById('fTarjeta').checked = d.tarjeta;
+  si('simDirect','');
+  _simPrecioActual = null;
+  _elast = d.elast != null ? d.elast : 1.0;
+  _competencia = d.competencia !== undefined ? d.competencia : null;
+  onInput(); nav('an');
+}
+function delRec(id) {
+  if (!confirm('¿Eliminar este análisis?')) return;
+  dump(load().filter(d=>d.id!==id)); renderHist(); toast('Eliminado');
+}
+
+// ═══════════════════════════════════════════
+// HISTORIAL
+// ═══════════════════════════════════════════
+function renderHist() {
+  const data = load();
+  const q = (gv('hQ')||'').toLowerCase(), f = gv('hF')||'all';
+  let arr = data;
+  if (q) arr = arr.filter(d=>d.nombre.toLowerCase().includes(q));
+  if (f==='entro') arr = arr.filter(d=>d.decision==='entro');
+  if (f==='no')    arr = arr.filter(d=>d.decision==='no');
+  const cont = document.getElementById('hCards');
+  if (!arr.length) {
+    cont.innerHTML = `<div class="empty-state"><div class="es-icon">◎</div><div class="es-txt">${data.length?'Sin resultados para ese filtro':'Tus análisis guardados aparecerán aquí'}</div></div>`;
+    return;
+  }
+  cont.innerHTML = arr.map(d => {
+    const cfg = d.cfgSnap || getCfg(), R = d.calc || {};
+    const mOk = R.margen >= cfg.margenMin/100;
+    const mPct = R.margen!=null ? (R.margen*100).toFixed(1)+'%' : '—';
+    const fecha = new Date(d.fecha).toLocaleDateString('es-MX',{day:'2-digit',month:'short'});
+    const isGo = d.decision==='entro';
+    const chip = isGo ? '<span class="h-chip hc-go">✓ Entré</span>' : '<span class="h-chip hc-no">✕ No entré</span>';
+    const tot = d.precio || 1;
+    const segs = [
+      {v:d.costo||0,c:'#FFD23F'},{v:d.com||0,c:'#FF9F1C'},{v:d.imp||0,c:'#FF4757'},
+      {v:d.envio||0,c:'#9B5DE5'},{v:Math.max(0,R.utilPza||0),c:'#00D26A'},
+    ].filter(s=>s.v>0);
+    const mtot = segs.reduce((a,s)=>a+s.v,0) || 1;
+    const bar = segs.map(s=>`<div class="h-bar-seg" style="width:${(s.v/mtot*100).toFixed(1)}%;background:${s.c}"></div>`).join('');
+    return `<div class="h-card">
+      <div class="h-bar">${bar}</div>
+      <div class="h-body">
+        <div class="h-name">${d.nombre}</div>
+        <div class="h-row">
+          <div>
+            <div class="h-chips">${chip}<span class="h-chip hc-n">${fecha}</span></div>
+          </div>
+          <div style="text-align:right">
+            <div class="h-num" style="color:${R.utilTotal>=0?'var(--go)':'var(--no)'}">${$f(R.utilTotal)}</div>
+            <div class="h-margin" style="color:${mOk?'var(--go)':'var(--no)'}">${mPct} margen</div>
+          </div>
+        </div>
+      </div>
+      <div class="h-actions">
+        <button class="h-act" onclick="loadRecById('${d.id}')">Editar</button>
+        <div class="h-sep"></div>
+        <button class="h-act h-act-del" onclick="delRec('${d.id}')">Eliminar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════
+function openCfg() {
+  const c = getCfg();
+  si('cCl',c.clasica); si('cPr',c.premium); si('cTa',c.tarjeta); si('cMn',c.margenMin); si('cDi',c.dias);
+  const sh = document.getElementById('cfgSheet');
+  sh.classList.remove('hidden');
+  sh.onclick = e => { if (e.target===sh) sh.classList.add('hidden'); };
+}
+function saveCfg() {
+  const cfg = { clasica:pf('cCl')||15, premium:pf('cPr')||19.5, tarjeta:pf('cTa')||7, margenMin:pf('cMn')||20, dias:pi('cDi')||60 };
+  localStorage.setItem(CK, JSON.stringify(cfg));
+  const upd = load().map(d => {
+    const newCom = d.precio * (d.tipo==='P' ? cfg.premium/100 : cfg.clasica/100);
+    const newImp = d.precio * 0.105;
+    const R = calc(d.precio, newCom, newImp, d.envio||120, d.costo, d.uds||0, d.ventas60||0, d.tarjeta, cfg);
+    if (!R) return d;
+    return { ...d, com:newCom, imp:newImp,
+      calc:{ ingNeto:R.ingNeto, costoFin:R.costoFin, costoReal:R.costoReal, utilPza:R.utilPza,
+             margen:R.margen, utilTotal:R.utilTotal, costoTotal:R.costoTotal, roi:R.roi, dias:R.dias, pmin:R.pmin },
+      cfgSnap:cfg };
+  });
+  dump(upd); renderHist(); onInput();
+  document.getElementById('cfgSheet').classList.add('hidden');
+  toast('Supuestos guardados · '+upd.length+' recalculados');
+}
+
+// ═══════════════════════════════════════════
+// EXPORT/IMPORT
+// ═══════════════════════════════════════════
+function doExp() {
+  const d = load(); if (!d.length) { toast('Sin datos'); return; }
+  const b = new Blob([JSON.stringify(d,null,2)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(b);
+  a.download = 'cta_'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+  toast(d.length+' análisis exportados');
+}
+
+function csvEsc(v) {
+  const s = String(v ?? '');
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+}
+function doExpCSV() {
+  const d = load(); if (!d.length) { toast('Sin datos para exportar'); return; }
+  const cfg0 = getCfg();
+  const headers = [
+    'Fecha','Producto','Decisión','Tipo publicación','Precio venta',
+    'Comisión','Impuesto','Envío','Costo proveedor','Tarjeta MSI',
+    'Unidades lote','Ventas 60 días','Utilidad por pieza','Utilidad total',
+    'Margen %','ROI %','Días para liquidar','Precio mínimo (margen objetivo)'
+  ];
+  const rows = d.map(r => {
+    const cfg = r.cfgSnap || cfg0;
+    const c = r.calc || {};
+    return [
+      new Date(r.fecha).toLocaleDateString('es-MX'),
+      r.nombre || '',
+      r.decision === 'entro' ? 'Entré' : 'No entré',
+      r.tipo === 'P' ? 'Premium' : 'Clásica',
+      r.precio ?? '',
+      r.com != null ? Number(r.com).toFixed(2) : '',
+      r.imp != null ? Number(r.imp).toFixed(2) : '',
+      r.envio ?? '',
+      r.costo ?? '',
+      r.tarjeta ? 'Sí' : 'No',
+      r.uds ?? '',
+      r.ventas60 ?? '',
+      c.utilPza != null ? c.utilPza.toFixed(2) : '',
+      c.utilTotal != null ? c.utilTotal.toFixed(2) : '',
+      c.margen != null ? (c.margen*100).toFixed(2) : '',
+      c.roi != null ? (c.roi*100).toFixed(2) : '',
+      c.dias ?? '',
+      c.pmin != null ? c.pmin.toFixed(2) : '',
+    ];
+  });
+  const csvLines = [headers, ...rows].map(row => row.map(csvEsc).join(','));
+  // BOM al inicio para que Excel detecte UTF-8 y acentos se vean bien
+  const csvContent = '\uFEFF' + csvLines.join('\r\n');
+  const b = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(b);
+  a.download = 'cta_respaldo_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  toast(d.length + ' registros exportados a CSV');
+}
+function doImp(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    try {
+      const im = JSON.parse(ev.target.result); if (!Array.isArray(im)) throw 0;
+      const ex = load(), ids = new Set(ex.map(d=>d.id));
+      const nw = im.filter(d=>!ids.has(d.id));
+      dump([...ex,...nw].sort((a,b)=>b.fecha>a.fecha?1:-1));
+      renderHist(); toast(nw.length+' importados');
+    } catch { toast('Archivo inválido'); }
+  };
+  r.readAsText(file); e.target.value='';
+}
+
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
+function nav(name) {
+  ['an','h'].forEach(p => {
+    document.getElementById('p-'+p).classList.toggle('on', p===name);
+    document.getElementById('p-'+p).classList.toggle('hidden', p!==name);
+    document.getElementById('tb-'+p).classList.toggle('on', p===name);
+  });
+  document.getElementById('scroll').scrollTo({top:0});
+  if (name==='h') renderHist();
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+// ENTER → SIGUIENTE CAMPO
+// ═══════════════════════════════════════════
+function onFieldEnter(e) {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  const nextId = e.target.dataset.next;
+  if (nextId) {
+    const next = document.getElementById(nextId);
+    if (next) { next.focus(); if (next.select) next.select(); }
+  } else {
+    e.target.blur(); // último campo: cierra el teclado
+  }
+}
+
+const gv = id => document.getElementById(id)?.value || '';
+const pf = id => parseFloat(document.getElementById(id)?.value) || 0;
+const pi = id => parseInt(document.getElementById(id)?.value) || 0;
+const si = (id,v) => { const el=document.getElementById(id); if (el) el.value=v; };
+const s  = (id,h) => { const el=document.getElementById(id); if (el) el.innerHTML=h; };
+const tog= (id,show) => { const el=document.getElementById(id); if (el) el.classList.toggle('hidden',!show); };
+const $f = n => { if (n==null||isNaN(n)) return '—'; return new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0}).format(n).replace('MX$','$'); };
+
+let _tt;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(_tt); _tt = setTimeout(()=>el.classList.remove('show'), 2600);
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => { renderHist(); onInput(); });
+</script>
+</body>
+</html>
